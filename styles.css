@@ -212,8 +212,8 @@ p { margin: 0; }
   box-shadow: 0 4px 12px rgba(88, 64, 192, 0.25);
 }
 .brand-logo {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   border-radius: 14px;
 

@@ -215,7 +215,7 @@ p { margin: 0; }
   width: 43px;
   height: 43px;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: var(--r-sm);
 
   background: rgba(255,255,255,0.04);
 

@@ -211,6 +211,13 @@ p { margin: 0; }
   border-radius: var(--r-sm);
   box-shadow: 0 4px 12px rgba(88, 64, 192, 0.25);
 }
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(88, 64, 192, 0.25);
+}
 
 .brand strong {
   font-size: 1.45rem;

@@ -228,15 +228,7 @@ p { margin: 0; }
     box-shadow 220ms ease,
     filter 220ms ease;
 }
-.brand:hover .brand-logo {
-  transform: translateY(-1px) scale(1.03);
 
-  box-shadow:
-    0 10px 28px rgba(88, 64, 192, 0.22),
-    0 4px 12px rgba(0,0,0,0.12);
-
-  filter: brightness(1.04);
-}
 
 .brand strong {
   font-size: 1.45rem;

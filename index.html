@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Huzaifa Pathan, an AI/ML and full-stack developer building practical AI-backed systems." />
+  <title>Huzaifa Pathan | AI Systems & Full Stack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Huzaifa Pathan home">
+      <span aria-hidden="true">HP</span>
+      <strong>Huzaifa Pathan</strong>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#work">Work</a>
+      <a href="#learning">Learning</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions" style="display: flex; gap: 12px; align-items: center; justify-self: end;">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" style="background: transparent; border: 1px solid var(--line); color: var(--ink); border-radius: var(--r-sm); width: 34px; height: 34px; display: grid; place-items: center; cursor: pointer; transition: all 160ms var(--ease-out);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon-icon">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
+      <a class="resume-link" href="assets/Huzaifa_SDE_Resume.pdf" target="_blank" rel="noreferrer">Resume ↗</a>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-main">
+        <div class="hero-status" aria-label="Specializations">
+          <span>AI/ML</span>
+          <span>Backend</span>
+          <span>GenAI</span>
+        </div>
+        <h1 id="hero-title">
+          AI products that feel<br><em>useful</em>, not decorative.
+        </h1>
+        <p class="hero-lede">
+          I am Huzaifa, a Computer Engineering student building practical systems with ML models,
+          APIs, dashboards, and real-time workflows. Software that helps people make decisions,
+          not just software that looks impressive for five seconds.
+        </p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a class="button primary" href="#work">See the work</a>
+          <a class="button secondary" href="mailto:huzaifapathan0077@gmail.com">Start a conversation</a>
+        </div>
+      </div>
+
+      <aside class="maker-note" aria-label="Short profile">
+        <div class="note-top">
+          <img src="https://avatars.githubusercontent.com/u/181507437?v=4" alt="Huzaifa Pathan" width="72" height="72" />
+          <div>
+            <span class="note-label">Builder note</span>
+            <strong>Planora is my current proof of direction.</strong>
+          </div>
+        </div>
+        <p>
+          Learning RAG, embeddings, vector search, prompt design, LLM integration, and evaluation basics
+          while getting stronger at Python, Django, Flask, and product-level backend thinking.
+        </p>
+        <div class="note-grid">
+          <div>
+            <span>CGPA</span>
+            <strong>9.63</strong>
+          </div>
+          <div>
+            <span>Mode</span>
+            <strong>Builder</strong>
+          </div>
+          <div>
+            <span>Open for</span>
+            <strong>AI + SDE</strong>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- SIGNAL BAR -->
+    <div class="signal-bar" aria-label="Portfolio highlights">
+      <div>
+        <span>Flagship</span>
+        <strong>Planora</strong>
+      </div>
+      <div>
+        <span>ML project</span>
+        <strong>SafeHeartAI</strong>
+      </div>
+      <div>
+        <span>Learning</span>
+        <strong>RAG + LLM apps</strong>
+      </div>
+      <div>
+        <span>Foundation</span>
+        <strong>Backend APIs</strong>
+      </div>
+    </div>
+
+    <!-- STORY -->
+    <section class="section story-section" aria-labelledby="story-title">
+      <p class="eyebrow">What I care about</p>
+      <div class="story-layout">
+        <h2 id="story-title">The best projects don't feel like assignments. They feel like answers.</h2>
+        <div class="story-copy">
+          <p>
+            I like building software where the technical choices have a reason: a prediction model that helps
+            someone understand risk, an AI assistant that works with live event data, or a dashboard that makes
+            messy information easier to act on.
+          </p>
+          <p>
+            My portfolio is still growing, but the pattern is already clear. I enjoy practical AI, clean backend
+            systems, and interfaces that help people move through a workflow without confusion.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="section work-section" id="work" aria-labelledby="work-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2 id="work-title">Projects with a point of view</h2>
+        </div>
+        <a class="text-link" href="https://github.com/HP0077" target="_blank" rel="noreferrer">GitHub profile ↗</a>
+      </div>
+
+      <div class="project-board">
+        <article class="project-card project-card-large reveal">
+          <span class="project-number">01</span>
+          <p class="project-type">AI event orchestration platform</p>
+          <h3>Planora</h3>
+          <p>
+            My strongest signal project: a full-stack event platform where AI supports the workflow instead of
+            sitting beside it. It combines task tracking, budgeting, dashboards, chat, analytics, and LLM-powered
+            event support.
+          </p>
+          <ul>
+            <li>Django REST APIs with JWT authentication and role-based access.</li>
+            <li>WebSocket-based chat and live task updates using Django Channels.</li>
+            <li>Groq API with Ollama fallback for summaries, task suggestions, and communication drafts.</li>
+          </ul>
+          <div class="tag-row">
+            <span>Django</span>
+            <span>React</span>
+            <span>DRF</span>
+            <span>WebSockets</span>
+            <span>Groq</span>
+          </div>
+          <a class="card-link" href="https://github.com/HP0077/PLANORA_v3.1" target="_blank" rel="noreferrer">View repository ↗</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-number">02</span>
+          <p class="project-type">Similarity + search</p>
+          <h3>CinemaSage</h3>
+          <p>
+            Movie recommendations with TF-IDF, cosine similarity, fuzzy search, autocomplete, and TMDB integration.
+          </p>
+          <div class="tag-row">
+            <span>Flask</span>
+            <span>scikit-learn</span>
+            <span>TMDB</span>
+          </div>
+          <a class="card-link" href="https://github.com/HP0077/CinemaSage" target="_blank" rel="noreferrer">Code ↗</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-number">03</span>
+          <p class="project-type">Applied ML</p>
+          <h3>SafeHeartAI</h3>
+          <p>
+            Heart disease risk prediction using Framingham data, preprocessing, feature work, and Random Forest classification.
+          </p>
+          <div class="tag-row">
+            <span>Python</span>
+            <span>Flask</span>
+            <span>Random Forest</span>
+          </div>
+          <a class="card-link" href="https://github.com/HP0077/SafeHeartAI" target="_blank" rel="noreferrer">Code ↗</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-number">04</span>
+          <p class="project-type">Wellness platform</p>
+          <h3>Fitness Fusion</h3>
+          <p>
+            A PHP and MySQL health platform for metrics, BMI/BMR calculators, diet plans, and exercise guidance.
+          </p>
+          <div class="tag-row">
+            <span>PHP</span>
+            <span>MySQL</span>
+            <span>JavaScript</span>
+          </div>
+          <a class="card-link" href="https://github.com/HP0077/FITNESS-FUSION-V4.1" target="_blank" rel="noreferrer">Repository ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- LEARNING -->
+    <section class="section learning-section" id="learning" aria-labelledby="learning-title">
+      <div class="learning-intro">
+        <p class="eyebrow">Learning path</p>
+        <h2 id="learning-title">The next layer is GenAI that knows where its answers come from.</h2>
+      </div>
+      <div class="learning-list">
+        <article class="reveal">
+          <span>01</span>
+          <div>
+            <h3>RAG fundamentals</h3>
+            <p>Chunking, retrieval, embeddings, vector search, grounding, and using context instead of relying only on prompts.</p>
+          </div>
+        </article>
+        <article class="reveal">
+          <span>02</span>
+          <div>
+            <h3>LLM app design</h3>
+            <p>Prompt structure, fallback behavior, API integration, evaluation basics, and making model output usable in real products.</p>
+          </div>
+        </article>
+        <article class="reveal">
+          <span>03</span>
+          <div>
+            <h3>Backend architecture</h3>
+            <p>Cleaner REST APIs, authentication, WebSockets, database design, deployment readiness, and maintainable data flow.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section class="section stack-section" id="stack" aria-labelledby="stack-title">
+      <p class="eyebrow">Stack</p>
+      <div class="stack-layout">
+        <h2 id="stack-title">Tools I use to move from idea to working product.</h2>
+        <div class="stack-grid">
+          <div class="reveal">
+            <h3>Languages</h3>
+            <p>Python, SQL, JavaScript, PHP, HTML, CSS</p>
+          </div>
+          <div class="reveal">
+            <h3>Backend</h3>
+            <p>Django, Django REST Framework, Flask, REST APIs, JWT, WebSockets</p>
+          </div>
+          <div class="reveal">
+            <h3>AI / Data</h3>
+            <p>scikit-learn, pandas, NumPy, EDA, preprocessing, feature engineering, model evaluation</p>
+          </div>
+          <div class="reveal">
+            <h3>GenAI</h3>
+            <p>RAG, embeddings, vector search, prompt engineering, LLM integration, evaluation basics</p>
+          </div>
+          <div class="reveal stack-wide">
+            <h3>Tools</h3>
+            <p>Git, Power BI, Excel, Render, SQLite, PostgreSQL, MySQL</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section experience-section" aria-labelledby="experience-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Experience</p>
+          <h2 id="experience-title">Education, practice, and proof</h2>
+        </div>
+        <div class="resume-actions">
+          <a href="assets/Huzaifa_Pathan_AI_Intern_Resume.pdf" target="_blank" rel="noreferrer">AI Resume ↗</a>
+          <a href="assets/Huzaifa_SDE_Resume.pdf" target="_blank" rel="noreferrer">SDE Resume ↗</a>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <article class="reveal">
+          <span>Dec 2025 – Jan 2026</span>
+          <div>
+            <h3>EDA Intern — Imarticus Learning</h3>
+            <p>Worked with Python, SQL, and Power BI to clean data, explore datasets, and build dashboards for trend analysis.</p>
+          </div>
+        </article>
+        <article class="reveal">
+          <span>2023 – Present</span>
+          <div>
+            <h3>B.E. Computer Engineering — K.C. College of Engineering</h3>
+            <p>CGPA 9.63 / 10 with focus on DSA, DBMS, operating systems, computer networks, machine learning, and backend development.</p>
+          </div>
+        </article>
+        <article class="reveal">
+          <span>Certifications</span>
+          <div>
+            <h3>Machine Learning and Generative AI</h3>
+            <p>AWS Academy Machine Learning Foundations, Python Data Structures & Algorithms, and IBM Generative AI Engineering Professional Certificate in progress.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Let's build something useful, grounded, and real.</h2>
+        <p>
+          I am open to AI/ML internships, SDE internships, and full-stack collaborations where I can
+          learn fast, contribute seriously, and keep improving the craft.
+        </p>
+        <div class="contact-actions">
+          <a class="button primary" href="mailto:huzaifapathan0077@gmail.com">Send an email</a>
+          <a class="button secondary" href="https://linkedin.com/in/huzaifapathan" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a class="button secondary" href="https://github.com/HP0077" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

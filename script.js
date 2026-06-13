@@ -45,12 +45,11 @@ const revealObserver = new IntersectionObserver(
   { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
 );
 
-document.querySelectorAll(".reveal").forEach((el, i) => {
-  // Stagger siblings in the same parent
+document.querySelectorAll(".reveal").forEach((el) => {
   const siblings = el.parentElement.querySelectorAll(".reveal");
   if (siblings.length > 1) {
     const idx = Array.from(siblings).indexOf(el);
-    el.style.transitionDelay = `${idx * 60}ms`;
+    el.style.transitionDelay = `${idx * 65}ms`;
   }
   revealObserver.observe(el);
 });
@@ -61,26 +60,16 @@ glow.className = "cursor-glow";
 glow.setAttribute("aria-hidden", "true");
 document.body.appendChild(glow);
 
-let scrollY = window.scrollY;
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 
 document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
-  updateGlowPosition();
+  glow.style.transform = `translate(${mouseX - 275}px, ${mouseY - 275}px)`;
   glow.style.opacity = "1";
-});
-
-document.addEventListener("scroll", () => {
-  scrollY = window.scrollY;
 });
 
 document.addEventListener("mouseleave", () => {
   glow.style.opacity = "0";
 });
-
-function updateGlowPosition() {
-  glow.style.transform = `translate(${mouseX - 300}px, ${mouseY - 300}px)`;
-}
-

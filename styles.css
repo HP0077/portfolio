@@ -614,6 +614,7 @@ p {
   grid-template-columns: repeat(3, 1fr);
   margin-top: 20px;
   padding-top: 18px;
+  padding-left: 15%;
   border-top: 1px solid var(--line);
 }
 

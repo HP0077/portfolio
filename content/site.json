@@ -31,7 +31,7 @@
     { "label": "AI résumé", "for": "AI / ML roles", "file": "assets/Huzaifa_Pathan_AI_Intern_Resume.pdf" },
     { "label": "SDE résumé", "for": "Backend / SDE roles", "file": "assets/Huzaifa_SDE_Resume.pdf", "primary": true }
   ],
-  "photo": "assets/me.jpg",
+  "photo": "",
   "photoAlt": "Huzaifa Pathan",
   "about": {
     "title": { "before": "A bit about", "accent": "me" },

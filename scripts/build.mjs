@@ -381,9 +381,9 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
     const size = imageSize(join(root, photoPath)) || { width: 300, height: 300 };
     photoHtml = `<img class="portrait" src="/${escapeHtml(photoPath)}" alt="${escapeHtml(site.photoAlt || site.name)}" width="${size.width}" height="${size.height}" decoding="async" />`;
   } else {
-    photoHtml =
-      `<!-- TODO: add your photo at ${escapeHtml(site.photo || "assets/me.jpg")} (square, 600×600 or larger). The build uses it automatically. -->\n` +
-      `          <div class="portrait portrait-fallback" role="img" aria-label="${escapeHtml(site.photoAlt || site.name)}"><span aria-hidden="true">${escapeHtml(initials(site.name || ""))}</span></div>`;
+    // No photo: the serif monogram is the intended default.
+    if (site.photo) log(`  warning: photo ${site.photo} not found, showing the monogram`);
+    photoHtml = `<div class="portrait portrait-fallback" role="img" aria-label="${escapeHtml(site.photoAlt || site.name)}"><span aria-hidden="true">${escapeHtml(initials(site.name || ""))}</span></div>`;
   }
 
   const stats = [

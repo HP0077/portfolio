@@ -179,7 +179,7 @@ Edit `content/experience.json`. Each entry has `date`, `title`, `org` and `line`
 - `headline`, `lede`, `status`: the hero. `status` is the lime line above the headline.
 - `profile`: the values in the hero `huzaifa.json` window. `projects` and `currently` are filled in for you.
 - `about.paragraphs`: a list of paragraphs. `about.outsideCode`: one line about you outside code (empty = hidden).
-- `photo`: path to your photo. Drop a square image (600×600 or larger) at `assets/me.jpg` and it replaces the "hp" monogram on the next build.
+- `photo`: leave it `""` to show the "hp" monogram (the current choice). To use a photo instead, drop a square image (600×600 or larger) in `assets/`, e.g. `assets/me.jpg`, and set `"photo": "assets/me.jpg"`.
 - `stack`: the daily / comfortable / learning columns.
 - `social`, `email`: contact links.
 - `resumes`: each entry is `{ "label": "AI résumé", "for": "AI / ML roles", "file": "assets/your.pdf" }`. With two or more, the header "Resume ↗" opens a small menu listing them by their `for` text, Contact shows one link per résumé, and Ctrl+K gets "open AI résumé" and so on. With one, "Resume ↗" is a plain link. To add or swap a résumé, drop the PDF in `assets/` and edit this list.

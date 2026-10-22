@@ -1,0 +1,39 @@
+{
+  "roles": [
+    {
+      "type": "internship",
+      "date": "dec 2025 – jan 2026",
+      "title": "EDA Intern",
+      "org": "Imarticus Learning",
+      "line": "Cleaned and explored real-world datasets with Python and SQL, and built Power BI dashboards for trend analysis."
+    }
+  ],
+  "education": [
+    {
+      "date": "2023 – present",
+      "title": "B.E. Computer Engineering",
+      "org": "K.C. College of Engineering",
+      "line": "DSA, DBMS, operating systems, computer networks, machine learning and backend development."
+    }
+  ],
+  "certifications": [
+    {
+      "date": "in progress",
+      "title": "IBM Generative AI Engineering Professional Certificate",
+      "org": "IBM · Coursera",
+      "line": ""
+    },
+    {
+      "date": "jun 2025",
+      "title": "AWS Academy Machine Learning Foundations",
+      "org": "Amazon Web Services",
+      "line": ""
+    },
+    {
+      "date": "sep 2024",
+      "title": "Python Data Structures & Algorithms",
+      "org": "Udemy",
+      "line": ""
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "_template": "SHORT: a card on the homepage only, no case-study page. Copy from the { above this line to its matching }, paste it into content/projects.json (put a comma between entries), then replace every TODO.",
+    "draft": true,
+    "slug": "new-project",
+    "title": "TODO: Project name",
+    "kicker": "TODO: a few lowercase words, e.g. real-time chat backend",
+    "year": 2027,
+    "status": "building",
+    "order": 99,
+    "role": "",
+    "oneLiner": "TODO: one sentence on what it does and what's interesting about it.",
+    "summary": "",
+    "problem": "",
+    "decision": "",
+    "tradeoff": "",
+    "stack": ["TODO: lowercase tool", "another tool"],
+    "links": { "repo": "", "demo": "", "paper": "", "video": "" },
+    "flowFile": "",
+    "flow": [],
+    "simulation": [],
+    "code": null,
+    "images": [],
+    "results": []
+  },
+  {
+    "_template": "FULL: card + case-study page at /projects/<slug>/. Copy from the { above this line to its matching }, paste it into content/projects.json, then replace every TODO. Delete any part you don't have (an empty \"\" or [] simply isn't shown).",
+    "draft": true,
+    "slug": "new-project",
+    "title": "TODO: Project name",
+    "kicker": "TODO: a few lowercase words, e.g. real-time chat backend",
+    "year": 2027,
+    "status": "building",
+    "order": 99,
+    "role": "",
+    "oneLiner": "TODO: one sentence on what it does and what's interesting about it.",
+    "summary": "TODO: 2–3 sentences. What it is, how it works, where it runs. Filling this in creates the case-study page.",
+    "problem": "TODO: 1–2 sentences. What was hard or worth solving.",
+    "decision": "TODO: 1–2 sentences. The main technical choices you made.",
+    "tradeoff": "TODO: 1–2 sentences. What you gave up, and why it was worth it.",
+    "stack": ["TODO: lowercase tool", "another tool"],
+    "links": {
+      "repo": "TODO: https://github.com/HP0077/your-repo (or \"\")",
+      "demo": "",
+      "paper": "",
+      "video": ""
+    },
+    "flowFile": "request_flow.md",
+    "flow": [
+      { "node": "TODO: step 1", "note": "short note" },
+      { "node": "step 2", "note": "short note" },
+      { "node": "step 3", "note": "short note" }
+    ],
+    "simulation": [
+      { "at": 0, "log": "> TODO: what happens first" },
+      { "at": 1, "status": "ok", "state": "ok", "log": "> second step" },
+      { "at": 2, "status": "done", "state": "ok", "log": "> result sent" }
+    ],
+    "code": {
+      "file": "TODO: file name, e.g. views.py",
+      "path": "path/inside/the/repo.py",
+      "lang": "python",
+      "snippet": "TODO: paste a real function from your repo here, unchanged.\nEach new line is written as \\n inside the quotes, and every \" in the code becomes \\\"."
+    },
+    "images": [
+      { "src": "assets/projects/new-project/1.webp", "alt": "TODO: what the screenshot shows" }
+    ],
+    "results": [
+      { "value": "TODO: a real number, e.g. 26.4%", "label": "what it measures, e.g. hit rate @10" }
+    ]
+  }
+]

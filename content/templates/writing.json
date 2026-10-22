@@ -1,0 +1,10 @@
+[
+  {
+    "_template": "Copy this { … } into content/writing.json (it starts as [] — paste between the brackets). The Writing section appears by itself once there's one entry. status: published, in review or in progress.",
+    "title": "TODO: paper, post or talk title",
+    "venue": "TODO: conference, journal, blog or event",
+    "year": 2027,
+    "status": "in progress",
+    "link": ""
+  }
+]

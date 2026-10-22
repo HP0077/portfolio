@@ -1,0 +1,8 @@
+<li class="row">
+            <span class="row-status">● {{item.status}}</span>
+            <span class="row-main">
+              <span class="row-title">{{#if item.link}}<a class="u" href="{{item.link}}">{{item.title}}</a>{{/if}}{{#if noLink}}{{item.title}}{{/if}}</span>
+              {{#if item.line}}<span class="row-text">{{item.line}}</span>{{/if}}
+            </span>
+            <span class="row-date">{{item.dates}}</span>
+          </li>

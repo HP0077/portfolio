@@ -1,0 +1,23 @@
+[
+  {
+    "status": "learning",
+    "title": "RAG and embeddings",
+    "line": "Grounded answers: chunking, embeddings and vector search, so a model answers from the data it was given.",
+    "link": "",
+    "dates": ""
+  },
+  {
+    "status": "building",
+    "title": "Planora",
+    "line": "Still shipping: an AI event platform on Django, Channels and a Groq → Ollama provider chain.",
+    "link": "/projects/planora/",
+    "dates": "since 2026"
+  },
+  {
+    "status": "learning",
+    "title": "IBM Generative AI Engineering certificate",
+    "line": "Prompt design, LLM integration and evaluation basics, on Coursera.",
+    "link": "",
+    "dates": "in progress"
+  }
+]

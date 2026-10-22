@@ -1,0 +1,6 @@
+<li class="row">
+            <span class="row-date">{{item.year}}</span>
+            <span class="row-title">{{#if item.link}}<a class="u" href="{{item.link}}" target="_blank" rel="noreferrer">{{item.title}} ↗</a>{{/if}}{{#if noLink}}{{item.title}}{{/if}}</span>
+            <span class="row-text">{{item.venue}}</span>
+            <span class="row-status">{{item.status}}</span>
+          </li>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{page.title}}</title>
+  <meta name="description" content="{{page.description}}" />
+  {{#if page.canonical}}<link rel="canonical" href="{{page.canonical}}" />
+  <meta property="og:url" content="{{page.canonical}}" />{{/if}}
+  <meta property="og:type" content="{{page.ogType}}" />
+  <meta property="og:site_name" content="{{site.name}}" />
+  <meta property="og:title" content="{{page.title}}" />
+  <meta property="og:description" content="{{page.description}}" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#0F2A22" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F7F5EF" media="(prefers-color-scheme: light)" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F2A22'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='15' fill='%23C9F27B'%3Ehp%3C/text%3E%3C/svg%3E" />
+  <script>
+    (function () {
+      var d = document.documentElement, theme;
+      try { theme = localStorage.getItem("theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      d.setAttribute("data-theme", theme);
+      if ("IntersectionObserver" in window) d.classList.add("js");
+    })();
+  </script>
+  {{{fontsHtml}}}
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">{{site.name}}</a>
+
+      <nav class="nav" aria-label="Primary">
+        <a class="u" href="/#work">Work</a>
+        <a class="u" href="/#about">About</a>
+        <a class="u" href="/#experience">Experience</a>
+        <a class="u" href="/#contact">Contact</a>
+        {{{resumeNavHtml}}}
+      </nav>
+
+      <button class="kbd-hint" type="button" aria-label="Open command palette (Ctrl K)" aria-haspopup="dialog" data-palette-open>
+        <kbd>ctrl k</kbd>
+      </button>
+
+      <button class="theme-toggle" type="button" aria-label="Switch to light theme" data-theme-toggle>
+        <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </svg>
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="content">
+{{{main}}}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© {{year}} {{site.name}}</span>
+    </div>
+  </footer>
+
+  <dialog class="window palette" role="dialog" aria-modal="true" aria-labelledby="palette-title" data-palette>
+    <div class="window-bar">
+      <span class="window-tab" id="palette-title">commands</span>
+      <span class="window-meta">esc to close</span>
+    </div>
+    <div class="window-body palette-body">
+      <label class="visually-hidden" for="palette-input">Type a command</label>
+      <input class="palette-input" id="palette-input" type="text" role="combobox" aria-expanded="true"
+        aria-controls="palette-list" aria-autocomplete="list" autocomplete="off" spellcheck="false"
+        placeholder="type a command" data-palette-input />
+      <ul class="palette-list" id="palette-list" role="listbox" aria-label="Commands" data-palette-list>
+        <li role="option" id="cmd-work" data-cmd="goto" data-target="work">go to work <span>section</span></li>
+        <li role="option" id="cmd-about" data-cmd="goto" data-target="about">go to about <span>section</span></li>
+        <li role="option" id="cmd-experience" data-cmd="goto" data-target="experience">go to experience <span>section</span></li>
+        <li role="option" id="cmd-copy" data-cmd="copy">copy email <span>clipboard</span></li>
+        <li role="option" id="cmd-theme" data-cmd="theme">toggle theme <span>dark / light</span></li>
+        {{{resumePaletteHtml}}}
+      </ul>
+      <p class="palette-empty" hidden data-palette-empty>no matching command</p>
+    </div>
+  </dialog>
+
+  <script src="/script.js" data-email="{{site.email}}" data-tz="{{site.timezone}}"></script>
+  {{{page.scripts}}}
+</body>
+</html>

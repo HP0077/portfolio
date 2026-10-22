@@ -1,0 +1,9 @@
+{{#if href}}<a class="card" href="{{href}}"{{#if external}} target="_blank" rel="noreferrer"{{/if}} data-reveal>{{/if}}{{#if noHref}}<div class="card" data-reveal>{{/if}}
+            <p class="card-meta">{{{metaHtml}}}</p>
+            <h3 class="card-title">{{p.title}}</h3>
+            {{#if p.oneLiner}}<p class="card-text">{{p.oneLiner}}</p>{{/if}}
+            <p class="card-foot">
+              {{#if stack}}<span class="card-stack">{{stack}}</span>{{/if}}
+              <span class="card-cta{{#if soon}} is-soon{{/if}}">{{{ctaHtml}}}</span>
+            </p>
+          {{#if href}}</a>{{/if}}{{#if noHref}}</div>{{/if}}

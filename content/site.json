@@ -1,0 +1,68 @@
+{
+  "name": "Huzaifa Pathan",
+  "url": "",
+  "title": "Huzaifa Pathan · Backend & Applied AI Engineer",
+  "description": "Huzaifa Pathan is a final-year computer engineer in Mumbai building LLM agents, Django APIs and real-time systems that hold up after the demo.",
+  "roles": "applied ai · backend · mumbai",
+  "status": "open to ai engineering & backend roles",
+  "location": "mumbai",
+  "timezone": "Asia/Kolkata",
+  "timezoneLabel": "ist",
+  "headline": {
+    "first": "Hi, I'm Huzaifa.",
+    "before": "I build the backend that keeps AI",
+    "accent": "working",
+    "after": "."
+  },
+  "lede": "Final-year computer engineer in Mumbai. I work on LLM agents, Django APIs and real-time systems, mostly the parts that have to hold up after the demo.",
+  "profile": {
+    "file": "huzaifa.json",
+    "role": "backend & applied ai engineer",
+    "focus": "llm agents · django · real-time",
+    "open_to": "ai engineering & backend roles"
+  },
+  "email": "huzaifapathan0077@gmail.com",
+  "github": "https://github.com/HP0077",
+  "social": [
+    { "label": "LinkedIn", "url": "https://linkedin.com/in/huzaifapathan" },
+    { "label": "GitHub", "url": "https://github.com/HP0077" }
+  ],
+  "resumes": [
+    { "label": "AI résumé", "for": "AI / ML roles", "file": "assets/Huzaifa_Pathan_AI_Intern_Resume.pdf" },
+    { "label": "SDE résumé", "for": "Backend / SDE roles", "file": "assets/Huzaifa_SDE_Resume.pdf", "primary": true }
+  ],
+  "photo": "assets/me.jpg",
+  "photoAlt": "Huzaifa Pathan",
+  "about": {
+    "title": { "before": "A bit about", "accent": "me" },
+    "paragraphs": [
+      "I build the backend side of products that use LLMs: Django and DRF APIs, WebSockets for live updates, and the code around the model call. Getting a demo to answer once is the easy part. I'm more interested in what comes after, when the provider rate-limits you, the prompt is missing context, or a request just hangs.",
+      "I work from the failure cases out. I read the logs, write down what broke and why, and would rather ship a feature that degrades cleanly than one that only works on a good day."
+    ],
+    "outsideCode": ""
+  },
+  "contact": {
+    "first": "Hiring for AI or backend work?",
+    "before": "I'd",
+    "accent": "like",
+    "after": "to hear about it.",
+    "replies": "usually replies within a day"
+  },
+  "stack": [
+    {
+      "label": "daily",
+      "note": "What I write every week.",
+      "items": ["Python", "Django", "Django REST Framework", "SQL", "Git"]
+    },
+    {
+      "label": "comfortable",
+      "note": "Shipped with it, still check the docs.",
+      "items": ["PostgreSQL", "Celery, Redis", "WebSockets / Channels", "Flask", "scikit-learn, pandas", "pytest", "Docker", "AWS: Elastic Beanstalk, RDS, S3"]
+    },
+    {
+      "label": "learning",
+      "note": "Studying now, building towards.",
+      "items": ["RAG", "Embeddings", "Vector search", "LLM evaluation"]
+    }
+  ]
+}

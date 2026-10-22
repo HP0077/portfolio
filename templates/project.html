@@ -1,0 +1,77 @@
+    <div class="wrap crumb">
+      <a class="link" href="/#work">← all work</a>
+    </div>
+
+    <section class="case-hero" aria-labelledby="case-title">
+      <div class="wrap case-hero-inner{{#if flowHtml}} has-flow{{/if}}">
+        <div class="case-copy">
+          {{#if p.kicker}}<p class="label label-accent">{{p.kicker}}</p>{{/if}}
+          <h1 id="case-title">{{p.title}}</h1>
+          {{#if p.oneLiner}}<p class="lede">{{p.oneLiner}}</p>{{/if}}
+          <p class="case-meta">{{{metaHtml}}}</p>
+          {{#if buttonsHtml}}<div class="actions">{{{buttonsHtml}}}</div>{{/if}}
+        </div>
+        {{{flowHtml}}}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="overview-title">
+      <div class="wrap">
+        <div class="case-panel" data-reveal>
+          <p class="label" id="overview-title">overview</p>
+          <p class="case-summary">{{p.summary}}</p>
+          {{#if pdtHtml}}<div class="pdt">{{{pdtHtml}}}</div>{{/if}}
+        </div>
+      </div>
+    </section>
+
+    {{#if codeHtml}}
+    <section class="section" aria-labelledby="code-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">{{p.code.path}}</p>
+            <h2 id="code-title">From the <em class="serif">code</em></h2>
+          </div>
+          {{#if p.links.repo}}<a class="link" href="{{p.links.repo}}" target="_blank" rel="noreferrer">view repository ↗</a>{{/if}}
+        </div>
+        <div data-reveal>{{{codeHtml}}}</div>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if imagesHtml}}
+    <section class="section" aria-labelledby="images-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">screens</p>
+            <h2 id="images-title">What it <em class="serif">looks</em> like</h2>
+          </div>
+        </div>
+        <div class="shots">{{{imagesHtml}}}</div>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if resultsHtml}}
+    <section class="section" aria-labelledby="results-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">results</p>
+            <h2 id="results-title">What it <em class="serif">did</em></h2>
+          </div>
+        </div>
+        <ul class="stats results" data-reveal>{{{resultsHtml}}}</ul>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if pagerHtml}}
+    <nav class="section pager" aria-label="More projects">
+      <div class="wrap pager-inner">
+        {{{pagerHtml}}}
+      </div>
+    </nav>
+    {{/if}}

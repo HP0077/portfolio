@@ -1,0 +1,35 @@
+{
+  "_template": "Copy ONE of the { … } blocks below into the matching list in content/experience.json: jobs go in \"roles\", degrees in \"education\", certificates in \"certifications\".",
+  "roles": [
+    {
+      "type": "internship",
+      "date": "TODO: jun 2027 – aug 2027",
+      "title": "TODO: Backend Intern",
+      "org": "TODO: Company",
+      "line": "TODO: one sentence on what you built or shipped."
+    },
+    {
+      "type": "job",
+      "date": "TODO: jul 2027 – present",
+      "title": "TODO: Software Engineer",
+      "org": "TODO: Company",
+      "line": "TODO: one sentence on what you work on."
+    }
+  ],
+  "education": [
+    {
+      "date": "TODO: 2027 – 2029",
+      "title": "TODO: Degree",
+      "org": "TODO: University",
+      "line": ""
+    }
+  ],
+  "certifications": [
+    {
+      "date": "TODO: mar 2027",
+      "title": "TODO: Certificate name",
+      "org": "TODO: Issuer",
+      "line": ""
+    }
+  ]
+}

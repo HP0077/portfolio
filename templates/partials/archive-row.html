@@ -1,0 +1,11 @@
+<li>
+              <a class="row" href="{{href}}"{{#if external}} target="_blank" rel="noreferrer"{{/if}}>
+                <span class="row-num">{{year}}</span>
+                <span class="row-main">
+                  <span class="row-title">{{p.title}}</span>
+                  {{#if p.oneLiner}}<span class="row-text">{{p.oneLiner}}</span>{{/if}}
+                </span>
+                <span class="row-stack">{{stack}}</span>
+                <span class="row-link">{{cta}} <span class="arrow">↗</span></span>
+              </a>
+            </li>

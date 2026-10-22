@@ -1,0 +1,3 @@
+# Keep private archives and local previews out of Vercel uploads.
+*.zip
+preview-*.png

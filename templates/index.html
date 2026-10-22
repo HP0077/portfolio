@@ -1,0 +1,151 @@
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="label label-accent">● {{site.status}}</p>
+          <h1 id="hero-title">
+            <span class="h-line">{{site.headline.first}}</span>
+            <span class="h-line dim">{{site.headline.before}} <em class="serif">{{site.headline.accent}}</em>{{site.headline.after}}</span>
+          </h1>
+          <p class="lede">{{site.lede}}</p>
+          <div class="actions">
+            <a class="button button-primary" href="#work">See my work</a>
+            <a class="button button-secondary" href="#about">About me</a>
+          </div>
+        </div>
+
+        <figure class="window hero-window" aria-label="Profile summary as JSON">
+          <div class="window-bar">
+            <span class="window-tab">{{site.profile.file}}</span>
+            <span class="window-meta">profile</span>
+          </div>
+<pre class="window-body json" data-json><code>{{{profileHtml}}}</code></pre>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="wrap about-inner">
+        <div class="about-photo" data-reveal>
+          {{{photoHtml}}}
+          <p class="label">{{site.roles}}<br />{{site.timezoneLabel}} <time data-clock>--:--</time></p>
+        </div>
+
+        <div class="about-copy" data-reveal>
+          <p class="label">{{n.about}} · about</p>
+          <h2 id="about-title">{{site.about.title.before}} <em class="serif">{{site.about.title.accent}}</em></h2>
+          {{{aboutHtml}}}
+          {{#if site.about.outsideCode}}<p class="about-outside">{{site.about.outsideCode}}</p>{{/if}}
+          {{#if statsHtml}}<ul class="stats">{{{statsHtml}}}</ul>{{/if}}
+        </div>
+      </div>
+    </section>
+
+    {{#if cardsHtml}}
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">{{n.work}} · work</p>
+            <h2 id="work-title">Things I've <em class="serif">built</em></h2>
+          </div>
+          {{#if site.github}}<a class="link" href="{{site.github}}" target="_blank" rel="noreferrer">all repositories ↗</a>{{/if}}
+        </div>
+
+        <div class="cards">
+          {{{cardsHtml}}}
+        </div>
+
+        {{#if archiveHtml}}
+        <details class="archive" data-reveal>
+          <summary>earlier work ({{archiveCount}})</summary>
+          <ul class="rows archive-rows">
+            {{{archiveHtml}}}
+          </ul>
+        </details>
+        {{/if}}
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if nowHtml}}
+    <section class="section" id="now" aria-labelledby="now-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">{{n.now}} · now</p>
+            <h2 id="now-title">What I'm <em class="serif">learning</em> and building</h2>
+          </div>
+        </div>
+        <ul class="rows now-rows" data-reveal>
+          {{{nowHtml}}}
+        </ul>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if writingHtml}}
+    <section class="section" id="writing" aria-labelledby="writing-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">{{n.writing}} · writing</p>
+            <h2 id="writing-title">Writing and <em class="serif">research</em></h2>
+          </div>
+        </div>
+        <ul class="rows writing-rows" data-reveal>
+          {{{writingHtml}}}
+        </ul>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if stackHtml}}
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">{{n.stack}} · stack</p>
+            <h2 id="stack-title">Tools I <em class="serif">reach</em> for</h2>
+          </div>
+        </div>
+        <div class="depth" data-reveal>
+          {{{stackHtml}}}
+        </div>
+      </div>
+    </section>
+    {{/if}}
+
+    {{#if experienceHtml}}
+    <section class="section experience" id="experience" aria-labelledby="experience-title">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div>
+            <p class="label">{{n.experience}} · experience</p>
+            <h2 id="experience-title">Experience and education</h2>
+          </div>
+          {{#if resumesHtml}}<div class="head-links">{{{resumesHtml}}}</div>{{/if}}
+        </div>
+        <ul class="rows timeline" data-reveal>
+          {{{experienceHtml}}}
+        </ul>
+      </div>
+    </section>
+    {{/if}}
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap" data-reveal>
+        <p class="label">{{n.contact}} · contact</p>
+        <h2 id="contact-title">
+          {{site.contact.first}}
+          <span class="dim">{{site.contact.before}} <em class="serif">{{site.contact.accent}}</em> {{site.contact.after}}</span>
+        </h2>
+        <div class="email-row">
+          <a class="email" href="mailto:{{site.email}}">{{site.email}}</a>
+          <button class="copy" type="button" data-copy>
+            <span aria-live="polite" data-copy-label>copy</span>
+          </button>
+        </div>
+        <p class="contact-meta">{{#if site.contact.replies}}{{site.contact.replies}} · {{/if}}<span class="nowrap">{{site.location}}, {{site.timezoneLabel}} <time data-clock>--:--</time></span></p>
+        <p class="contact-links">{{{contactLinksHtml}}}</p>
+      </div>
+    </section>

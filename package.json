@@ -1,0 +1,14 @@
+{
+  "name": "huzaifa-pathan-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Personal site of Huzaifa Pathan. Content in content/*.json, built to static HTML with zero dependencies.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev.mjs"
+  }
+}

@@ -1,0 +1,530 @@
+[
+  {
+    "slug": "planora",
+    "title": "Planora",
+    "kicker": "ai event orchestration",
+    "year": 2026,
+    "status": "building",
+    "order": 1,
+    "role": "",
+    "oneLiner": "An event platform where tasks, budgets and live chat share one backend, with an AI assistant that falls back instead of failing.",
+    "summary": "Planora is a full-stack event platform: task tracking, budgets, live chat, analytics and an AI assistant that drafts summaries, task suggestions and announcements from the event's own data. It runs on one Django backend over ASGI, with Django Channels for real-time updates and an ordered chain of LLM providers behind every AI call.",
+    "problem": "Event managers plan, budget, assign tasks and talk to their team while an event is moving. Planora keeps all of it on one platform, so the assistant can read live task and event data.",
+    "decision": "One Django backend on ASGI serves both the REST API and the Channels sockets. AI is a step inside the request: build a prompt from event context, then walk a provider chain, Groq then Ollama.",
+    "tradeoff": "The fallback is local llama3, capped at 128 output tokens and given 180s for cold starts, against Groq's llama-3.3-70b at 600. Answers get shorter and slower, but the feature degrades instead of failing.",
+    "stack": [
+      "django",
+      "drf",
+      "react",
+      "channels",
+      "celery",
+      "redis",
+      "groq",
+      "ollama"
+    ],
+    "links": {
+      "repo": "https://github.com/HP0077/PLANORA_v3.1",
+      "demo": "",
+      "paper": "",
+      "video": ""
+    },
+    "flowFile": "request_flow.md",
+    "flow": [
+      {
+        "node": "user request",
+        "note": "http"
+      },
+      {
+        "node": "django api",
+        "note": "drf · jwt"
+      },
+      {
+        "node": "llm agent",
+        "note": "groq"
+      },
+      {
+        "node": "fallback",
+        "note": "ollama"
+      },
+      {
+        "node": "live update",
+        "note": "channels"
+      }
+    ],
+    "simulation": [
+      {
+        "at": 0,
+        "log": "> request in · jwt ok"
+      },
+      {
+        "at": 1,
+        "log": "> building prompt from event context"
+      },
+      {
+        "at": 2,
+        "status": "groq · 429 rate limited",
+        "short": "groq · 429",
+        "state": "fail",
+        "log": "> provider_failed groq → trying ollama"
+      },
+      {
+        "at": 3,
+        "status": "ollama · 200 ok",
+        "state": "ok",
+        "log": "> ollama ok · answer ready"
+      },
+      {
+        "at": 4,
+        "status": "channels · pushed",
+        "state": "ok",
+        "log": "> pushed to the event group"
+      }
+    ],
+    "code": {
+      "file": "views.py",
+      "path": "backend/apps/ai_assistant/views.py",
+      "lang": "python",
+      "snippet": "def _generate_with_fallback(self, prompt: str):\n    \"\"\"Try each provider in order; return (answer, provider, tokens) or raise.\"\"\"\n    provider_order = self._select_providers()\n    last_error = None\n    for provider in provider_order:\n        try:\n            answer, tokens = self._generate(provider, prompt)\n            return answer, provider, tokens\n        except Exception as exc:  # noqa: BLE001\n            logger.warning(\"ai_tool.provider_failed provider=%s exc=%s\", provider, exc)\n            last_error = str(exc)\n    raise RuntimeError(f\"All AI providers unavailable. {last_error or ''}\")"
+    },
+    "images": [],
+    "results": []
+  },
+  {
+    "slug": "tripwise",
+    "title": "TripWise",
+    "kicker": "machine-learning travel recommendations",
+    "year": 2026,
+    "status": "shipped",
+    "order": 2,
+    "role": "",
+    "oneLiner": "Eight questions in, six destinations out: a tree ensemble trained on 112,321 real yes-swipes, tested on travellers it never saw.",
+    "summary": "TripWise recommends travel destinations. You answer eight questions about budget, season, pace and what you enjoy, and a soft-voting ensemble of a Random Forest and Extra Trees ranks 225 destinations by how likely someone like you is to say yes. It learned from 112,321 yes-swipes by 38,826 travellers in the Stravl Travel Preference Dataset and runs live on Vercel.",
+    "problem": "Eight survey answers and 225 possible destinations: far more classes than signal. To be worth anything, a recommender here has to beat the obvious baseline of suggesting the most popular places.",
+    "decision": "Encode the answers as 29 columns (five ordinal, three multi-hot), train a Random Forest and Extra Trees (40 trees each, depth 10, balanced class weights) and average their probabilities. Filter by the continents you picked, return the top six, and evaluate on 10% of travellers held out by person, not by row.",
+    "tradeoff": "The absolute numbers stay low because the problem is hard: hit rate @10 is 26.4%, against 20.7% for most-popular. The ensemble ties each model alone within the margin of error, and only four of the eight questions measurably change the results.",
+    "stack": [
+      "python",
+      "flask",
+      "scikit-learn",
+      "numpy",
+      "pytest",
+      "vercel"
+    ],
+    "links": {
+      "repo": "https://github.com/HP0077/TripWise",
+      "demo": "https://trip-wise-virid.vercel.app/",
+      "paper": "",
+      "video": ""
+    },
+    "flowFile": "predict_flow.md",
+    "flow": [
+      {
+        "node": "8 answers",
+        "note": "post /predict"
+      },
+      {
+        "node": "validation",
+        "note": "400 on bad input"
+      },
+      {
+        "node": "29 features",
+        "note": "multi-hot"
+      },
+      {
+        "node": "ensemble",
+        "note": "rf + et · soft vote"
+      },
+      {
+        "node": "continent filter",
+        "note": "your regions"
+      },
+      {
+        "node": "top 6",
+        "note": "fit score"
+      }
+    ],
+    "simulation": [
+      {
+        "at": 0,
+        "log": "> request in · 8 answers"
+      },
+      {
+        "at": 1,
+        "status": "all fields valid",
+        "short": "valid",
+        "state": "ok",
+        "log": "> parse_single_choice · parse_multi_choice"
+      },
+      {
+        "at": 2,
+        "status": "29 columns",
+        "state": "ok",
+        "log": "> build_input_vector()"
+      },
+      {
+        "at": 3,
+        "status": "rf + et averaged",
+        "short": "averaged",
+        "state": "ok",
+        "log": "> model.predict_proba(input_vector)"
+      },
+      {
+        "at": 4,
+        "status": "regions filtered",
+        "short": "filtered",
+        "state": "ok",
+        "log": "> keeping your continents only"
+      },
+      {
+        "at": 5,
+        "status": "6 matches",
+        "state": "ok",
+        "log": "> top 6 returned with fit scores"
+      }
+    ],
+    "code": {
+      "file": "train_model.py",
+      "path": "train_model.py",
+      "lang": "python",
+      "snippet": "def build_ensemble():\n    \"\"\"Balanced Random Forest + Extra Trees soft-voting ensemble used by the app.\"\"\"\n    rf_model = RandomForestClassifier(\n        n_estimators=40,\n        max_depth=10,\n        min_samples_leaf=4,\n        class_weight='balanced',\n        random_state=42,\n        n_jobs=-1\n    )\n\n    et_model = ExtraTreesClassifier(\n        n_estimators=40,\n        max_depth=10,\n        min_samples_leaf=4,\n        class_weight='balanced',\n        random_state=42,\n        n_jobs=-1\n    )\n\n    return VotingClassifier(\n        estimators=[('rf', rf_model), ('et', et_model)],\n        voting='soft'\n    )"
+    },
+    "images": [],
+    "results": [
+      {
+        "value": "26.4%",
+        "label": "hit rate @10 · most-popular gets 20.7%"
+      },
+      {
+        "value": "7.2%",
+        "label": "hit rate @1 · most-popular gets 4.7%"
+      },
+      {
+        "value": "3,883",
+        "label": "held-out travellers, split by person"
+      },
+      {
+        "value": "35 ms",
+        "label": "median prediction time"
+      }
+    ]
+  },
+  {
+    "slug": "cinemasage",
+    "title": "CinemaSage",
+    "kicker": "content-based recommendations",
+    "year": 2025,
+    "status": "shipped",
+    "order": 3,
+    "role": "",
+    "oneLiner": "Type a film you like, typos included, and get twelve similar ones from TF-IDF and cosine similarity.",
+    "summary": "CinemaSage is a Flask movie recommender. It turns each film's title, genres, keywords, cast, director and overview into a TF-IDF vector, compares them with cosine similarity, and uses fuzzy matching so a misspelt or partial title still finds the right film. Posters come from the TMDB API.",
+    "problem": "People rarely type a film title exactly. A recommender that needs an exact match returns nothing for a typo or half a title.",
+    "decision": "Content-based recommendations: TF-IDF (5,000 features) over six text fields, compared with cosine similarity. A fuzzy match with a score threshold of 60 maps the typed title to the closest real one first, and autocomplete ranks prefix matches above substring matches.",
+    "tradeoff": "The whole similarity matrix is built in memory at startup, so each request is a lookup, but startup time and memory grow with the catalogue. Posters are fetched in parallel threads with a 3s timeout and a cache, so a slow TMDB costs a missing poster, not a failed page.",
+    "stack": [
+      "flask",
+      "scikit-learn",
+      "pandas",
+      "thefuzz",
+      "tmdb"
+    ],
+    "links": {
+      "repo": "https://github.com/HP0077/CinemaSage",
+      "demo": "https://cinema-sage.onrender.com/",
+      "paper": "",
+      "video": ""
+    },
+    "flowFile": "recommend_flow.md",
+    "flow": [
+      {
+        "node": "typed title",
+        "note": "post /recommend"
+      },
+      {
+        "node": "fuzzy match",
+        "note": "thefuzz"
+      },
+      {
+        "node": "similarity",
+        "note": "tf-idf · cosine"
+      },
+      {
+        "node": "posters",
+        "note": "tmdb · threads"
+      },
+      {
+        "node": "results",
+        "note": "json · top 12"
+      }
+    ],
+    "simulation": [
+      {
+        "at": 0,
+        "log": "> movie: \"interstelar\""
+      },
+      {
+        "at": 1,
+        "status": "matched · interstellar",
+        "short": "interstellar",
+        "state": "ok",
+        "log": "> best match: interstellar"
+      },
+      {
+        "at": 2,
+        "status": "top 12 ranked",
+        "state": "ok",
+        "log": "> ranking by cosine similarity"
+      },
+      {
+        "at": 3,
+        "status": "1 timeout · skipped",
+        "short": "1 timeout",
+        "state": "fail",
+        "log": "> poster timed out → returning without it"
+      },
+      {
+        "at": 4,
+        "status": "200 · 12 films",
+        "short": "200 ok",
+        "state": "ok",
+        "log": "> 12 recommendations sent"
+      }
+    ],
+    "code": {
+      "file": "app.py",
+      "path": "app.py",
+      "lang": "python",
+      "snippet": "def recommend_movie(movie_name):\n    \"\"\"Find similar movies using fuzzy matching + TF-IDF cosine similarity.\"\"\"\n    movie_name = movie_name.lower().strip()\n\n    print(f\"Searching for: {movie_name}\")\n\n    # Use Fuzzy Matching to find the best matching movie title\n    match = process.extractOne(movie_name, movies_data['title_lower'])\n\n    if not match or match[1] < 60:\n        print(\"No strong match found!\")\n        return None, []\n\n    best_match = match[0]\n    score = match[1]\n    print(f\"Best match: {best_match} (Score: {score})\")\n\n    # Find the index of the best-matched movie\n    movie_index = movies_data[movies_data['title_lower'] == best_match].index[0]\n\n    # Find top 12 most similar movies based on combined features\n    scores = sorted(\n        list(enumerate(similarity[movie_index])),\n        key=lambda x: x[1],\n        reverse=True\n    )[1:13]  # skip self, get top 12\n\n    # Collect all TMDB IDs to fetch posters in parallel\n    all_indices = [movie_index] + [i[0] for i in scores]\n    tmdb_ids = [int(movies_data.iloc[idx].get('id', 0)) for idx in all_indices]\n    poster_map = fetch_posters_batch(tmdb_ids)\n\n    # Build results with poster URLs\n    searched_movie = get_movie_details(movie_index, poster_map)\n    recommended_movies = [get_movie_details(i[0], poster_map) for i in scores]\n\n    print(f\"Found {len(recommended_movies)} recommendations\")\n    return searched_movie, recommended_movies"
+    },
+    "images": [],
+    "results": []
+  },
+  {
+    "slug": "safeheartai",
+    "title": "SafeHeartAI",
+    "kicker": "applied machine learning",
+    "year": 2025,
+    "status": "archived",
+    "order": 4,
+    "role": "",
+    "oneLiner": "Ten-year heart disease risk from 15 routine health measurements, served as a small Flask API.",
+    "summary": "SafeHeartAI predicts ten-year coronary heart disease risk from the Framingham Heart Study data. A Random Forest is trained offline, saved as a pickle and served by a Flask API that classifies a patient as high or low risk from 15 health indicators.",
+    "problem": "Estimating ten-year coronary heart disease risk (the Framingham TenYearCHD label) from measurements a clinic already records: age, blood pressure, cholesterol, glucose, BMI, smoking and history.",
+    "decision": "A Random Forest with 100 trees, trained on an 80/20 split and pickled, served by a Flask endpoint that reads the 15 features in a fixed order and returns High risk or Low risk.",
+    "tradeoff": "A binary label is easy to read but hides how close someone is to the line: the API returns a class, not a probability. If the model file is missing, the server still starts and answers with a clear error instead of crashing.",
+    "stack": [
+      "python",
+      "flask",
+      "scikit-learn",
+      "pandas",
+      "numpy"
+    ],
+    "links": {
+      "repo": "https://github.com/HP0077/SafeHeartAI",
+      "demo": "https://safeheartai.onrender.com/",
+      "paper": "",
+      "video": ""
+    },
+    "flowFile": "predict_flow.md",
+    "flow": [
+      {
+        "node": "health form",
+        "note": "15 fields"
+      },
+      {
+        "node": "flask api",
+        "note": "post /predict"
+      },
+      {
+        "node": "random forest",
+        "note": "model.pkl"
+      },
+      {
+        "node": "risk class",
+        "note": "high / low"
+      }
+    ],
+    "simulation": [
+      {
+        "at": 0,
+        "log": "> form submitted · 15 fields"
+      },
+      {
+        "at": 1,
+        "status": "features ordered",
+        "short": "ordered",
+        "state": "ok",
+        "log": "> building feature array"
+      },
+      {
+        "at": 2,
+        "status": "100 trees voted",
+        "short": "100 trees",
+        "state": "ok",
+        "log": "> model.predict(input_features)"
+      },
+      {
+        "at": 3,
+        "status": "low risk",
+        "state": "ok",
+        "log": "> {\"prediction\": \"Low risk\"}"
+      }
+    ],
+    "code": {
+      "file": "app.py",
+      "path": "app.py",
+      "lang": "python",
+      "snippet": "@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    \"\"\"Process user input and return prediction result\"\"\"\n    try:\n        data = request.get_json() if request.is_json else request.form.to_dict()\n\n        if not data:\n            return jsonify({\"error\": \"No data received\"}), 400\n\n        # Here we will convert the input data to numpy array\n        input_features = np.array([[float(data.get(k, 0)) for k in [\n            \"male\", \"age\", \"education\", \"currentSmoker\", \"cigsPerDay\",\n            \"BPMeds\", \"prevalentStroke\", \"prevalentHyp\", \"diabetes\",\n            \"totChol\", \"sysBP\", \"diaBP\", \"BMI\", \"heartRate\", \"glucose\"\n        ]]])\n\n        if model is None:\n            return jsonify({\"error\": \"Model not loaded. Check server logs.\"}), 500\n\n        prediction = model.predict(input_features)[0]\n        result = \"High risk\" if prediction == 1 else \"Low risk\"\n\n        return jsonify({\"prediction\": result})\n\n    except Exception as e:\n        return jsonify({\"error\": str(e)}), 500"
+    },
+    "images": [],
+    "results": []
+  },
+  {
+    "slug": "fitness-fusion",
+    "title": "Fitness Fusion",
+    "kicker": "health platform deployed on aws",
+    "year": 2026,
+    "status": "shipped",
+    "order": 5,
+    "role": "",
+    "oneLiner": "State-wise diet plans for all 37 states and UTs, age-based workouts and health tracking, deployed on AWS with Elastic Beanstalk, RDS and S3.",
+    "summary": "Fitness Fusion is a PHP and MySQL health platform built in my third year. Users track BMI, body fat, BMR and weight over time, and get a vegetarian or non-vegetarian diet plan for their state and goal, plus an exercise routine for their age group. It ran on AWS, with Elastic Beanstalk running the Docker image, RDS for MySQL and S3 for static assets, and was taken down afterwards to stop the billing.",
+    "problem": "Most diet advice ignores where you live. In India, what people eat changes from state to state, so a useful plan has to start from the user's state, diet type and goal.",
+    "decision": "Plain PHP 8 and MySQL with no framework, but careful: PDO prepared statements for every query, bcrypt, CSRF tokens and session-fixation protection. All production settings come from environment variables, so the same code runs on XAMPP locally and as a Docker image on Elastic Beanstalk against RDS and S3.",
+    "tradeoff": "Managed AWS services took away server and database chores but billed every month, so the deployment came down once the project was done. The diet data lives in PHP arrays (about 3,000 lines), which was quick to build but turns every content change into a code change.",
+    "stack": [
+      "php",
+      "mysql",
+      "docker",
+      "elastic beanstalk",
+      "rds",
+      "s3"
+    ],
+    "links": {
+      "repo": "https://github.com/HP0077/FITNESS-FUSION-V4.1",
+      "demo": "",
+      "paper": "",
+      "video": ""
+    },
+    "flowFile": "deploy_flow.md",
+    "flow": [
+      {
+        "node": "user request",
+        "note": "https · acm"
+      },
+      {
+        "node": "beanstalk",
+        "note": "docker on ec2"
+      },
+      {
+        "node": "auth guard",
+        "note": "session · csrf"
+      },
+      {
+        "node": "rds mysql",
+        "note": "pdo · prepared"
+      },
+      {
+        "node": "s3 assets",
+        "note": "ASSET_URL"
+      },
+      {
+        "node": "dashboard",
+        "note": "bmi · bmr · history"
+      }
+    ],
+    "simulation": [
+      {
+        "at": 0,
+        "log": "> GET /dashboard/dashboard.php"
+      },
+      {
+        "at": 1,
+        "status": "health check ok",
+        "short": "healthy",
+        "state": "ok",
+        "log": "> apache + php 8.1 in the container"
+      },
+      {
+        "at": 2,
+        "status": "session valid",
+        "short": "session ok",
+        "state": "ok",
+        "log": "> requireAuth()"
+      },
+      {
+        "at": 3,
+        "status": "prepared query ok",
+        "short": "query ok",
+        "state": "ok",
+        "log": "> getDB()->prepare(...)"
+      },
+      {
+        "at": 4,
+        "status": "logo from bucket",
+        "short": "from s3",
+        "state": "ok",
+        "log": "> static assets via S3_ASSET_URL"
+      },
+      {
+        "at": 5,
+        "status": "rendered",
+        "state": "ok",
+        "log": "> dashboard sent"
+      }
+    ],
+    "code": {
+      "file": "db.php",
+      "path": "includes/db.php",
+      "lang": "php",
+      "snippet": "function getDB(): PDO\n{\n    static $pdo = null;\n\n    if ($pdo !== null) {\n        return $pdo;\n    }\n\n    $dsn = \"mysql:host=\" . DB_HOST . \";port=\" . DB_PORT . \";dbname=\" . DB_NAME . \";charset=utf8mb4\";\n\n    $options = [\n        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,   // Throw on errors\n        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,         // Return assoc arrays\n        PDO::ATTR_EMULATE_PREPARES   => false,                    // Real prepared statements\n        PDO::ATTR_PERSISTENT         => false,                    // No persistent conns on shared hosting / free tier\n    ];\n\n    try {\n        $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);\n        return $pdo;\n    } catch (PDOException $e) {\n        $dsnContext = sprintf('host=%s;port=%s;db=%s', DB_HOST, DB_PORT, DB_NAME);\n\n        // Log with context\n        error_log('[Fitness Fusion] DB connection failed (' . $dsnContext . '): ' . $e->getMessage());\n\n        // In development, show the reason to speed up debugging\n        if (APP_ENV === 'development') {\n            http_response_code(503);\n            exit('DB connection failed (' . $dsnContext . '): ' . htmlspecialchars($e->getMessage()));\n        }\n\n        // Production-safe message\n        http_response_code(503);\n        exit('Service temporarily unavailable. Please try again later.');\n    }\n}"
+    },
+    "images": [],
+    "results": [
+      {
+        "value": "37",
+        "label": "states and UTs, veg and non-veg plans"
+      },
+      {
+        "value": "3 × 3",
+        "label": "goals × age groups for workouts"
+      },
+      {
+        "value": "13",
+        "label": "prepared statements, zero raw queries"
+      },
+      {
+        "value": "5",
+        "label": "aws services: beanstalk, ec2, rds, s3, iam"
+      }
+    ]
+  },
+  {
+    "draft": true,
+    "slug": "mixshield",
+    "title": "MixShield",
+    "kicker": "prompt-injection guardrails for tool-using agents",
+    "year": null,
+    "status": "building",
+    "order": 6,
+    "role": "",
+    "oneLiner": "",
+    "summary": "",
+    "problem": "",
+    "decision": "",
+    "tradeoff": "",
+    "stack": [],
+    "links": {
+      "repo": "",
+      "demo": "",
+      "paper": "",
+      "video": ""
+    },
+    "flowFile": "",
+    "flow": [],
+    "simulation": [],
+    "code": null,
+    "images": [],
+    "results": []
+  }
+]

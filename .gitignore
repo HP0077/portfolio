@@ -1,0 +1,4 @@
+dist/
+node_modules/
+# Private source archives must never be published with the site.
+*.zip

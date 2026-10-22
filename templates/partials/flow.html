@@ -1,0 +1,12 @@
+<figure class="window flow-window" aria-labelledby="flow-caption">
+          <div class="window-bar">
+            <span class="window-tab">{{file}}</span>
+            <span class="window-meta">{{slug}}</span>
+          </div>
+          <div class="window-body flow" data-flow data-sim="{{simJson}}">
+            <ol class="flow-nodes">{{{nodesHtml}}}</ol>
+            <span class="flow-dot" aria-hidden="true"></span>
+            {{#if log}}<p class="flow-log" aria-hidden="true" data-log>{{log}}</p>{{/if}}
+          </div>
+          <figcaption class="visually-hidden" id="flow-caption">{{caption}}</figcaption>
+        </figure>

@@ -341,9 +341,19 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
   const layout = readText("templates/layout.html");
   const pages = [];
 
+  // Social preview cards are pre-rendered by `npm run og` into assets/og/ (site.png,
+  // <slug>.png). A project without its own card uses the site card.
+  const ogDir = join(root, "assets", "og");
+  const siteOg = existsSync(join(ogDir, "site.png")) ? "/og.png" : "";
+  const ogFor = (slug) => (existsSync(join(ogDir, `${slug}.png`)) ? `/assets/og/${slug}.png` : siteOg);
+  const baseUrl = (site.url || "").replace(/\/$/, "");
+
   const page = (path, main, meta) => {
-    const canonical = site.url ? site.url.replace(/\/$/, "") + path : "";
-    pages.push({ path, html: render(layout, { site, resume, year, main, fontsHtml, resumeNavHtml, resumePaletteHtml, page: { ...meta, canonical } }) });
+    const canonical = baseUrl ? baseUrl + path : "";
+    // og:image must be an absolute URL, so it needs site.url.
+    const ogImage = baseUrl && meta.og ? baseUrl + meta.og : "";
+    const twitterCard = ogImage ? "summary_large_image" : "summary";
+    pages.push({ path, html: render(layout, { site, resume, year, main, fontsHtml, resumeNavHtml, resumePaletteHtml, page: { ...meta, canonical, ogImage, twitterCard } }) });
   };
 
   /* Homepage */
@@ -354,10 +364,15 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
   const years = projects.map((p) => p.year).filter(Number.isFinite);
   const since = years.length ? Math.min(...years) : null;
 
+  // Initial clock value (Mumbai time at build); script.js keeps it current.
+  const clockNow = new Intl.DateTimeFormat("en-GB", {
+    timeZone: site.timezone || "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false,
+  }).format(new Date());
+
   const profile = site.profile || {};
   const currently = now[0] ? `${now[0].status ? now[0].status + " " : ""}${now[0].title}`.toLowerCase() : "";
   const based = site.location
-    ? `<span class="js">"${escapeHtml(site.location)} · <time data-clock>--:--</time> ${escapeHtml(site.timezoneLabel || "")}"</span>`
+    ? `<span class="js">"${escapeHtml(site.location)} · <time data-clock>${clockNow}</time> ${escapeHtml(site.timezoneLabel || "")}"</span>`
     : "";
   const entries = [
     ["role", profile.role && `<span class="js">"${escapeHtml(profile.role)}"</span>`],
@@ -386,7 +401,7 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
     photoHtml = `<div class="portrait portrait-fallback" role="img" aria-label="${escapeHtml(site.photoAlt || site.name)}"><span aria-hidden="true">${escapeHtml(initials(site.name || ""))}</span></div>`;
   }
 
-  const stats = [
+  const stats = site.showStats === false ? [] : [
     shipped && { value: shipped, label: plural(shipped, "project shipped", "projects shipped") },
     internships && { value: internships, label: plural(internships, "internship", "internships") },
     since && { value: since, label: "building since" },
@@ -440,7 +455,7 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
   ].filter(Boolean).join("\n          ");
 
   const home = render(readText("templates/index.html"), {
-    site, n, profileHtml, photoHtml,
+    site, n, profileHtml, photoHtml, clockNow,
     aboutHtml: (site.about?.paragraphs || []).filter(present).map((t) => `<p>${escapeHtml(t)}</p>`).join("\n          "),
     statsHtml: stats.map((s) => partial("stat", s)).join(""),
     cardsHtml, archiveHtml: archiveHtml.trim(), archiveCount: archive.length,
@@ -448,7 +463,10 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
     resumesHtml: resumes.map((r) => externalLink(r.label, "/" + r.file)).join("\n            "),
     contactLinksHtml,
   });
-  page("/", home, { title: site.title || site.name, description: site.description || "", ogType: "website", scripts: "" });
+  page("/", home, {
+    title: site.title || site.name, description: site.description || "", ogType: "website", scripts: "",
+    og: siteOg, ogImageAlt: `${site.name}: ${site.roles || ""}`,
+  });
 
   /* Case-study pages */
 
@@ -531,6 +549,7 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
       description,
       ogType: "article",
       scripts: flowHtml ? '<script src="/flow.js"></script>' : "",
+      og: ogFor(p.slug), ogImageAlt: `${p.title}, a project by ${site.name}`,
     });
   });
 
@@ -543,11 +562,15 @@ export async function build({ outDir = join(root, "dist"), log = console.log } =
   }
   if (existsSync(join(root, "assets"))) cpSync(join(root, "assets"), join(outDir, "assets"), { recursive: true });
   for (const file of ["styles.css", "script.js", "flow.js"]) cpSync(join(root, file), join(outDir, file));
-  if (site.url) {
-    const base = site.url.replace(/\/$/, "");
-    const urls = pages.map((pg) => `  <url><loc>${escapeHtml(base + pg.path)}</loc></url>`).join("\n");
+  if (siteOg) cpSync(join(ogDir, "site.png"), join(outDir, "og.png"));
+  if (baseUrl) {
+    const urls = pages.map((pg) => `  <url><loc>${escapeHtml(baseUrl + pg.path)}</loc></url>`).join("\n");
     writeFileSync(join(outDir, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
+    writeFileSync(join(outDir, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${baseUrl}/sitemap.xml\n`);
   }
+  const missingOg = caseStudies.filter((p) => !existsSync(join(ogDir, `${p.slug}.png`))).map((p) => p.slug);
+  if (!siteOg) log("  note: no social preview image yet (run `npm run og`)");
+  else if (missingOg.length) log(`  note: no preview card for ${missingOg.join(", ")}; using the site card (run \`npm run og\`)`);
 
   const drafts = allProjects.filter((p) => p.draft).map((p) => p.slug);
   log(`built ${pages.length} pages in ${Date.now() - started}ms → ${outDir}` + (drafts.length ? ` (skipped drafts: ${drafts.join(", ")})` : ""));

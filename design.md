@@ -192,3 +192,5 @@ One easing curve everywhere: `cubic-bezier(0.2, 0.8, 0.2, 1)`. Durations 150–5
 - WCAG AA for all body text in both themes.
 - No horizontal page scroll at 360px. Check 360, 390, 768, 1280, 1440.
 - Per-page `<title>`, meta description and Open Graph tags.
+- **Link previews**: every page sets `og:image` (absolute URL, 1200×630, with width, height and alt) and `twitter:card` `summary_large_image`. The cards (`templates/og.html`) are images, not themed pages, so they use the dark tokens directly: the forest background with the faint grid, name and role line, then the hero headline (homepage) or the project title and one-liner (case studies), and on the right a window showing `huzaifa.json` or the project's flow. `npm run og` renders them with the local Chrome into `assets/og/`.
+- The live clocks start from the IST time at build, so they never show a placeholder; script.js keeps them current.

@@ -183,4 +183,17 @@ Edit `content/experience.json`. Each entry has `date`, `title`, `org` and `line`
 - `stack`: the daily / comfortable / learning columns.
 - `social`, `email`: contact links.
 - `resumes`: each entry is `{ "label": "AI résumé", "for": "AI / ML roles", "file": "assets/your.pdf" }`. With two or more, the header "Resume ↗" opens a small menu listing them by their `for` text, Contact shows one link per résumé, and Ctrl+K gets "open AI résumé" and so on. With one, "Resume ↗" is a plain link. To add or swap a résumé, drop the PDF in `assets/` and edit this list.
-- `url`: set this to the live address (e.g. `https://huzaifa.dev`) to add canonical URLs, `og:url` and a `sitemap.xml`.
+- `url`: the live address (`https://huzaifapathan.vercel.app`). It's needed for canonical URLs, `og:url`, the preview images, `sitemap.xml` and `robots.txt`.
+- `showStats`: `false` hides the numbers row under About; `true` shows projects shipped, internships and building since.
+
+## Link previews (LinkedIn, WhatsApp, X)
+
+Every page has a 1200×630 preview card in `assets/og/`: `site.png` for the homepage and `<slug>.png` for each case study. The cards are drawn from your content by the Chrome on your computer:
+
+```
+npm run og
+```
+
+Run it after you add a project or change your headline, then commit the PNGs. A new project without a card uses the homepage card until you do. Vercel can't draw them itself, because there's no browser on its build machine.
+
+LinkedIn caches previews, so after changing a card, paste the page URL into the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) to refresh it.

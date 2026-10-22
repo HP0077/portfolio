@@ -1,6 +1,7 @@
 {
   "name": "Huzaifa Pathan",
-  "url": "",
+  "url": "https://huzaifapathan.vercel.app",
+  "showStats": false,
   "title": "Huzaifa Pathan · Backend & Applied AI Engineer",
   "description": "Huzaifa Pathan is a final-year computer engineer in Mumbai building LLM agents, Django APIs and real-time systems that hold up after the demo.",
   "roles": "applied ai · backend · mumbai",

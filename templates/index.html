@@ -27,7 +27,7 @@
       <div class="wrap about-inner">
         <div class="about-photo" data-reveal>
           {{{photoHtml}}}
-          <p class="label">{{site.roles}}<br />{{site.timezoneLabel}} <time data-clock>--:--</time></p>
+          <p class="label">{{site.roles}}<br />{{site.timezoneLabel}} <time data-clock>{{clockNow}}</time></p>
         </div>
 
         <div class="about-copy" data-reveal>
@@ -145,7 +145,7 @@
             <span aria-live="polite" data-copy-label>copy</span>
           </button>
         </div>
-        <p class="contact-meta">{{#if site.contact.replies}}{{site.contact.replies}} · {{/if}}<span class="nowrap">{{site.location}}, {{site.timezoneLabel}} <time data-clock>--:--</time></span></p>
+        <p class="contact-meta">{{#if site.contact.replies}}{{site.contact.replies}} · {{/if}}<span class="nowrap">{{site.location}}, {{site.timezoneLabel}} <time data-clock>{{clockNow}}</time></span></p>
         <p class="contact-links">{{{contactLinksHtml}}}</p>
       </div>
     </section>

@@ -86,7 +86,10 @@
       "lang": "python",
       "snippet": "def _generate_with_fallback(self, prompt: str):\n    \"\"\"Try each provider in order; return (answer, provider, tokens) or raise.\"\"\"\n    provider_order = self._select_providers()\n    last_error = None\n    for provider in provider_order:\n        try:\n            answer, tokens = self._generate(provider, prompt)\n            return answer, provider, tokens\n        except Exception as exc:  # noqa: BLE001\n            logger.warning(\"ai_tool.provider_failed provider=%s exc=%s\", provider, exc)\n            last_error = str(exc)\n    raise RuntimeError(f\"All AI providers unavailable. {last_error or ''}\")"
     },
-    "images": [],
+    "images": [
+      { "src": "assets/projects/planora/home.webp", "alt": "Planora's landing page" },
+      { "src": "assets/projects/planora/ai-assistant.webp", "alt": "Planora's AI assistant suggesting next steps for an event with an overdue task" }
+    ],
     "results": []
   },
   {
@@ -188,7 +191,10 @@
       "lang": "python",
       "snippet": "def build_ensemble():\n    \"\"\"Balanced Random Forest + Extra Trees soft-voting ensemble used by the app.\"\"\"\n    rf_model = RandomForestClassifier(\n        n_estimators=40,\n        max_depth=10,\n        min_samples_leaf=4,\n        class_weight='balanced',\n        random_state=42,\n        n_jobs=-1\n    )\n\n    et_model = ExtraTreesClassifier(\n        n_estimators=40,\n        max_depth=10,\n        min_samples_leaf=4,\n        class_weight='balanced',\n        random_state=42,\n        n_jobs=-1\n    )\n\n    return VotingClassifier(\n        estimators=[('rf', rf_model), ('et', et_model)],\n        voting='soft'\n    )"
     },
-    "images": [],
+    "images": [
+      { "src": "assets/projects/tripwise/how-it-works.webp", "alt": "TripWise's How it works page, stepping through the pipeline from eight answers to six places" },
+      { "src": "assets/projects/tripwise/results.webp", "alt": "Hit rate @10 for TripWise against random and most-popular baselines" }
+    ],
     "results": [
       {
         "value": "26.4%",
@@ -296,7 +302,10 @@
       "lang": "python",
       "snippet": "def recommend_movie(movie_name):\n    \"\"\"Find similar movies using fuzzy matching + TF-IDF cosine similarity.\"\"\"\n    movie_name = movie_name.lower().strip()\n\n    print(f\"Searching for: {movie_name}\")\n\n    # Use Fuzzy Matching to find the best matching movie title\n    match = process.extractOne(movie_name, movies_data['title_lower'])\n\n    if not match or match[1] < 60:\n        print(\"No strong match found!\")\n        return None, []\n\n    best_match = match[0]\n    score = match[1]\n    print(f\"Best match: {best_match} (Score: {score})\")\n\n    # Find the index of the best-matched movie\n    movie_index = movies_data[movies_data['title_lower'] == best_match].index[0]\n\n    # Find top 12 most similar movies based on combined features\n    scores = sorted(\n        list(enumerate(similarity[movie_index])),\n        key=lambda x: x[1],\n        reverse=True\n    )[1:13]  # skip self, get top 12\n\n    # Collect all TMDB IDs to fetch posters in parallel\n    all_indices = [movie_index] + [i[0] for i in scores]\n    tmdb_ids = [int(movies_data.iloc[idx].get('id', 0)) for idx in all_indices]\n    poster_map = fetch_posters_batch(tmdb_ids)\n\n    # Build results with poster URLs\n    searched_movie = get_movie_details(movie_index, poster_map)\n    recommended_movies = [get_movie_details(i[0], poster_map) for i in scores]\n\n    print(f\"Found {len(recommended_movies)} recommendations\")\n    return searched_movie, recommended_movies"
     },
-    "images": [],
+    "images": [
+      { "src": "assets/projects/cinemasage/home.webp", "alt": "CinemaSage's home page with the movie search box" },
+      { "src": "assets/projects/cinemasage/recommendations.webp", "alt": "Recommendations for Titanic, with posters from TMDB" }
+    ],
     "results": []
   },
   {
@@ -376,7 +385,10 @@
       "lang": "python",
       "snippet": "@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    \"\"\"Process user input and return prediction result\"\"\"\n    try:\n        data = request.get_json() if request.is_json else request.form.to_dict()\n\n        if not data:\n            return jsonify({\"error\": \"No data received\"}), 400\n\n        # Here we will convert the input data to numpy array\n        input_features = np.array([[float(data.get(k, 0)) for k in [\n            \"male\", \"age\", \"education\", \"currentSmoker\", \"cigsPerDay\",\n            \"BPMeds\", \"prevalentStroke\", \"prevalentHyp\", \"diabetes\",\n            \"totChol\", \"sysBP\", \"diaBP\", \"BMI\", \"heartRate\", \"glucose\"\n        ]]])\n\n        if model is None:\n            return jsonify({\"error\": \"Model not loaded. Check server logs.\"}), 500\n\n        prediction = model.predict(input_features)[0]\n        result = \"High risk\" if prediction == 1 else \"Low risk\"\n\n        return jsonify({\"prediction\": result})\n\n    except Exception as e:\n        return jsonify({\"error\": str(e)}), 500"
     },
-    "images": [],
+    "images": [
+      { "src": "assets/projects/safeheartai/home.webp", "alt": "SafeHeartAI's landing page" },
+      { "src": "assets/projects/safeheartai/result.webp", "alt": "The health form with a Low risk result" }
+    ],
     "results": []
   },
   {
@@ -479,7 +491,10 @@
       "lang": "php",
       "snippet": "function getDB(): PDO\n{\n    static $pdo = null;\n\n    if ($pdo !== null) {\n        return $pdo;\n    }\n\n    $dsn = \"mysql:host=\" . DB_HOST . \";port=\" . DB_PORT . \";dbname=\" . DB_NAME . \";charset=utf8mb4\";\n\n    $options = [\n        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,   // Throw on errors\n        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,         // Return assoc arrays\n        PDO::ATTR_EMULATE_PREPARES   => false,                    // Real prepared statements\n        PDO::ATTR_PERSISTENT         => false,                    // No persistent conns on shared hosting / free tier\n    ];\n\n    try {\n        $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);\n        return $pdo;\n    } catch (PDOException $e) {\n        $dsnContext = sprintf('host=%s;port=%s;db=%s', DB_HOST, DB_PORT, DB_NAME);\n\n        // Log with context\n        error_log('[Fitness Fusion] DB connection failed (' . $dsnContext . '): ' . $e->getMessage());\n\n        // In development, show the reason to speed up debugging\n        if (APP_ENV === 'development') {\n            http_response_code(503);\n            exit('DB connection failed (' . $dsnContext . '): ' . htmlspecialchars($e->getMessage()));\n        }\n\n        // Production-safe message\n        http_response_code(503);\n        exit('Service temporarily unavailable. Please try again later.');\n    }\n}"
     },
-    "images": [],
+    "images": [
+      { "src": "assets/projects/fitness-fusion/home.webp", "alt": "Fitness Fusion's landing page" },
+      { "src": "assets/projects/fitness-fusion/diet-plan.webp", "alt": "A vegetarian weight-loss diet plan for Maharashtra" }
+    ],
     "results": [
       {
         "value": "37",

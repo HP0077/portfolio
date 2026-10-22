@@ -1,17 +1,17 @@
 [
   {
+    "status": "building",
+    "title": "MixShield",
+    "line": "A hackathon project: prompt-injection guardrails for tool-using agents.",
+    "link": "",
+    "dates": ""
+  },
+  {
     "status": "learning",
     "title": "RAG and embeddings",
     "line": "Grounded answers: chunking, embeddings and vector search, so a model answers from the data it was given.",
     "link": "",
     "dates": ""
-  },
-  {
-    "status": "building",
-    "title": "Planora",
-    "line": "Still shipping: an AI event platform on Django, Channels and a Groq → Ollama provider chain.",
-    "link": "/projects/planora/",
-    "dates": "since 2026"
   },
   {
     "status": "learning",
